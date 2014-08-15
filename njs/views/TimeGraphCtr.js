@@ -281,11 +281,19 @@ provoda.View.extendTo(TimeGraphCtr, {
 			var _this = this;
 			array.forEach(function(el) {
 				var grad = _this.parent_view.gender_grads[el.gender];
+                var gray_grad = _this.parent_view.grays;
 				var color = colors.getGradColor(el.num, 1, el.groups_count, grad);
-				age_areas[ el.key ] = (_this.areas_group.append('path').style({
-					stroke: 'none',
-					"fill": color
-				}));
+                var gray = colors.getGradColor(el.num, 1, el.groups_count, gray_grad);
+				age_areas[ el.key ] = {
+                    left:_this.areas_group.append('path').style({
+                        stroke: 'none',
+                        "fill": color
+                    }),
+                    right: _this.areas_group.append('path').style({
+                        stroke: 'none',
+                        "fill": gray
+                    })
+                };
 
 			});
 			return age_areas;
@@ -485,18 +493,25 @@ provoda.View.extendTo(TimeGraphCtr, {
 		}
 	},
 	'compx-draw': {
-		depends_on: ['base_graph_data', 'current_runners_data', 'age_areas'],
-		fn: function(base_graph_data, current_runners_data, age_areas) {
+		depends_on: ['base_graph_data', 'current_runners_data', 'age_areas', 'selected_time'],
+		fn: function(base_graph_data, current_runners_data, age_areas, selected_time) {
 			if (!base_graph_data || !current_runners_data ||!age_areas){
 				return;
 			}
+
+
 			var _this = this;
 
 			var reversed_groups = current_runners_data.runners_groups.slice();
 			reversed_groups.reverse();
 			var points_byd = {};
+            var points_byd_left = {};
+            var points_byd_right = {};
+
 
 			var steps = base_graph_data.steps;
+            var cur_step = selected_time * steps
+
 			var px_step = this.px_step;
 			var height_factor = base_graph_data.height_factor;
 			var runners_byd = base_graph_data.runners_byd;
@@ -504,6 +519,8 @@ provoda.View.extendTo(TimeGraphCtr, {
 			var getRunByDPoints = function(array, prev_array) {
 
 				var result = [];
+                var result1 = []
+                var result2 = []
 				for (var i = 0; i < steps; i++) {
 					var x1 = i * px_step;
 					var x2 = x1 + px_step;
@@ -523,22 +540,53 @@ provoda.View.extendTo(TimeGraphCtr, {
 						x: x2,
 						y: y
 					});
+                    if (i <= cur_step) {
+                        result1.push({
+                            x: x1,
+                            y: y
+                        }, {
+                            x: x2,
+                            y: y
+                        });
+                    } else {
+                        result2.push({
+                            x: x1,
+                            y: y
+                        }, {
+                            x: x2,
+                            y: y
+                        });
+                    }
 				}
-				return result;
+                if (!result2.length) result2.push({
+                    x: x2,
+                    y: y
+                }, {
+                    x: x2,
+                    y: y
+                });
+				return [result, result1, result2];
 			};
-			
+
 			reversed_groups.forEach(function(el, i) {
 				var prev = reversed_groups[i-1];
 				prev = prev && points_byd[prev.key];
-				points_byd[el.key] = getRunByDPoints(runners_byd[el.key], prev);
+				points_byd[el.key] = getRunByDPoints(runners_byd[el.key], prev)[0]
+                points_byd_left[el.key] = getRunByDPoints(runners_byd[el.key], prev)[1]
+                points_byd_right[el.key] = getRunByDPoints(runners_byd[el.key], prev)[2];
 			});
 
 
 
-			var areas_data = {};
+            var areas_data_left = {}
+            var areas_data_right = {}
 
 			var getRunByDPathData = function(array) {
-				var result = '';
+                if (!array.length) {
+                    console.log(array)
+                    return
+                }
+                var result = '';
 				result += 'M' + mh.format({x: array[0].x, y: _this.height});
 				for (var i = 0; i < array.length; i++) {
 					result += ' L' + mh.format(array[i]);
@@ -548,19 +596,23 @@ provoda.View.extendTo(TimeGraphCtr, {
 				return result;
 			};
 			current_runners_data.runners_groups.forEach(function(el) {
-				
-				areas_data[el.key] = getRunByDPathData(points_byd[el.key]);
+                areas_data_left[el.key] = getRunByDPathData(points_byd_left[el.key]);
+                areas_data_right[el.key] = getRunByDPathData(points_byd_right[el.key]);
 			});
 
 
 			current_runners_data.runners_groups.forEach(function(el) {
-				age_areas[el.key].attr("d", areas_data[el.key]);
+                age_areas[el.key].left.attr("d", areas_data_left[el.key]);
+                age_areas[el.key].right.attr("d", areas_data_right[el.key]);
 			});
 
 			return {
 				runners_byd: runners_byd,
 				points_byd: points_byd,
-				areas_data: areas_data,
+				areas_data: {
+                    left: areas_data_left,
+                    right: areas_data_right
+                },
 				height_factor: height_factor
 			};
 		}

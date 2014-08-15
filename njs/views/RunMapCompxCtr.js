@@ -5,7 +5,7 @@ function(provoda, $, GeoMapCtr, TimeGraphCtr, colors, spv, d3, mh) {
 var RunMapCompxCtr = function() {};
 provoda.View.extendTo(RunMapCompxCtr, {
 	gender_grads: [colors.getRGBGradient(255, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(255, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
-	grays: colors.getRGBGradient(4, ['#777777', '#EEEEEE'].map(colors.parseHEXString)),
+	grays: colors.getRGBGradient(4, ['#EEEEEE','#777777'].map(colors.parseHEXString)),
 	children_views:{
 		geo_map: GeoMapCtr,
 		time_graph: TimeGraphCtr
@@ -13,7 +13,6 @@ provoda.View.extendTo(RunMapCompxCtr, {
 	createDetails: function() {
 		this.c = this.root_view.els.runm_c;
 		this.createTemplate();
-		
 
 		var svg;
 		svg = document.createElementNS(mh.SVGNS, 'svg');
@@ -125,7 +124,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		depends_on: ['selected_time', 'cvs_data'],
 		fn: function(selected_time, cvs_data) {
 			if (cvs_data && typeof selected_time != 'undefined'){
-				return cvs_data.run_gap * selected_time;
+				return cvs_data.run_gap * selected_time;     //cvs_data.run_gap - максимальное время (временной интервал) в секундах, selected_time от 0 до 1
 			}
 		}
 	},
@@ -197,7 +196,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			if (!runners_rate || !count_lines){
 				return;
 			}
-			var container = this.tpl.ancs['legendcount'];
+            var container = this.tpl.ancs['legendcount'];
 
 			var width = container.width();
 
@@ -369,7 +368,6 @@ provoda.View.extendTo(RunMapCompxCtr, {
 				};
 
 			})();
-			
 			return result_data;
 		}
 	},

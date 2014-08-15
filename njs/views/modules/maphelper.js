@@ -400,7 +400,7 @@ var getBasePoints = function(base, boundrect, total_distance){
 };
 
 var drawRunnersPoints = function(colors, grads, data, cvs_data_items, place, seconds, start_time) {
-	var p_w = 3;
+    var p_w = 3;
 	//var p_h = 3;
 	var point_radius = 2;
 	var margin_collapsable = 2;

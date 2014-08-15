@@ -53,8 +53,7 @@ provoda.View.extendTo(SelRunner, {
 				return;
 			}
 
-			
-			var current_distance = mh.getDistanceByRangesAndTime(raw, start_time + time_value * 1000);
+            var current_distance = mh.getDistanceByRangesAndTime(raw, start_time + time_value * 1000);
 			current_distance = Math.max(0, current_distance);
 			var geo_coords = mh.getPointAtDistance(
 				geodata.geometry.coordinates,
