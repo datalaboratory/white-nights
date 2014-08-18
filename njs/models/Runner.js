@@ -55,7 +55,7 @@ BrowseMap.Model.extendTo(Runner, {
 		team: 'team',
 		result_time: 'result_time',
 		gender: 'gender',
-		start_time: 'start_time',
+		start_time: 'start_time'
 	//	full_time_string: 'result_time_string'
 	}
 

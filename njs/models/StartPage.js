@@ -151,7 +151,7 @@ BrowseMap.Model.extendTo(StartPage, {
 		};
 	},
 	getIndexes: function(runners, cvsdata) {
-		var states = {};
+        var states = {};
 		var _this = this;
 
 		var teams_header =['команда', 'команды', 'команд'];
@@ -208,7 +208,7 @@ BrowseMap.Model.extendTo(StartPage, {
 			limit: 1,
 			no_flabel: city_header
 		}, {
-			name: 'country',
+			name: 'birthyear',
 			limit: 1,
 			no_flabel: 'Со всего мира'
 		}].forEach(function(el) {

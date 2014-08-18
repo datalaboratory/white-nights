@@ -77,9 +77,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="map-cover">
+			<div class="map-cover" pv-anchor="map-con">
+                <div pv-class="{{!trackwidth && 'hidden'}}"
+                     pv-anchor="mapcover"></div> <!--чтобы вместо картинки подкладывать карту, не убирая код связанный с картинкой -->
 				<!-- Сдвиг картинки, относительно трека + размеры файла картинки -->
-				<img 
+				<!--<img
 					
 					excesstop="460"
 					excessright="275"
@@ -96,14 +98,14 @@
 					pv-class="{{!trackwidth && 'hidden'}}"
 					pv-anchor="mapcover"
 
-					>
+					>-->
 			</div>
-			<div class="mapoverlay">
+			<div class="mapoverlay" >
 				
 
 				<div class="main_header">
 					<h1 class="bmap_header" pv-class="bmap_header {{current_runner_data && 'hidden'}}">Мы&nbsp;бежали<span class="marath-icon"><img src="i/marathon-logo.png"></span><span pv-anchor="mthswitch" class="mthswitch">марафон</span></h1>
-					
+                    <!--<h1 class="bmap_header" pv-class="bmap_header" pv-text="{{start_year}}"></h1>-->
 
 					<h1 class="bmap_header hidden" pv-class="bmap_header {{!current_runner_data && 'hidden'}}">
 						<span pv-text="{{current_runner_data.full_name}}"></span> 
@@ -620,8 +622,10 @@
 
 			
 
-			<div id="map-con" pv-nest="geo_map"></div>
+			<div id="map-con" pv-nest="geo_map" ></div>
+            <!--<div pv-anchor="map-con"></div>-->
 		</div>
+
 		<div class="controlls big_block" pv-anchor="controlls">
 			<div class="controlls_desc">
 				<h2 class="controlls_desc_h"> 1845 бегунов<br/> и 339 бегуний</h2>
@@ -775,7 +779,7 @@
 						</span>
 						<div class="filters">
 							<div class="firunr_search_c">
-								<input class="firunr_search" placeholder="Имя или номер" type="search" pv-events="input:makeSearch keydown:makeSearch mousemove:makeSearch"/ >
+								<input class="firunr_search" placeholder="Имя или номер" type="search" pv-events="input:makeSearch keydown:makeSearch mousemove:makeSearch" />
 							</div>
 							<div pv-class="{{query && 'hidden'}}">
 								<div class="firunr_age_c">
@@ -802,7 +806,7 @@
 								</div>
 								<div class="firunr_place_c">
 									<div class="firunr_place filterr_menu">
-										<div class="filtrr" pv-text="{{selected_filter_city || filter_city.0.label}}" >Со всего мира</div>
+										<div class="filtrr" pv-text="{{selected_filter_city || filter_city.0.label}}" ></div>
 										<div class="flrr_menu_list" >
 											<div class="flrr_menu_item" pv-nest="filter_city" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
 												<span pv-text="{{label}}" class="filter_item_name"></span>
@@ -811,6 +815,17 @@
 										</div>
 									</div>
 								</div>
+                                <div class="firunr_place_c">
+                                    <div class="firunr_place filterr_menu">
+                                        <div class="filtrr" pv-text="{{selected_filter_birthyear || filter_birthyear.0.label}}" ></div>
+                                        <div class="flrr_menu_list" >
+                                            <div class="flrr_menu_item" pv-nest="filter_birthyear" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
+                                                <span pv-text="{{label}}" class="filter_item_name"></span>
+                                                <span class="counter" pv-text="{{!novalue && counter}}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  <!--вот например фильтр по году рождения -->
 
 								
 							</div>
@@ -826,12 +841,12 @@
 							pv-nest="runners_filtered" 
 							pv-events="click::switchSelection"
 							class="runrs_item" 
-							pv-class="runrs_item {{selected && 'selected_runr'}} {{gender === 0 && 'runr_female'}} {{gender !== 0 && 'runr_male'}}">
+							pv-class="runrs_item {{selected && 'selected_runr'}} {{gender === 0 && 'runr_female'}} {{gender === 1 && 'runr_male'}} {{gender === 2 && 'runr_off'}}">
 							<div class="runr_selection_mark"></div>
 							<div class="runr_pos" pv-text="{{selected_filter_gender && gender_pos}} {{!selected_filter_gender && pos}}"></div>
 							<div class="runr_name" pv-text="{{full_name}}"></div>
 							<div class="runr_num" pv-text="{{num}}"></div>
-							<div class="runr_age" pv-text="{{2013 - birthyear}}"></div>
+							<div class="runr_age" pv-text="{{2014 - birthyear}}"></div>
 							<div class="runr_team" pv-text="{{team}}"></div>
 							<div class="runr_place" pv-text="{{city || country}}"></div>
 							<div class="runr_time" pv-text="{{full_time_string}}"></div>
@@ -848,13 +863,13 @@
 	
 </div>
 <!-- Tips -->
-<div id="fotorama" class="fotorama" data-fit="cover" data-width="400" data-height="200">
+<!--<div id="fotorama" class="fotorama" data-fit="cover" data-width="400" data-height="200">
 	<div data-img="i/wn-tips-01.png"><span class="fotorama__select">Змей показывает распределение бегунов по&nbsp;трассе. Чем толще змей, тем больше толпа.</span> <span id="close" ontouchstart="closeit()" onclick="closeit()">×</span> </div>
 	<div data-img="i/wn-tips-02.png"><span class="fotorama__select">Цветом показаны пол и&nbsp;возрастные группы бегунов.</span> <span id="close" ontouchstart="closeit()" onclick="closeit()">×</span> </div>
 	<div data-img="i/wn-tips-03.png"><span class="fotorama__select">Чтобы увидеть забег от&nbsp;старта до&nbsp;финиша последнего бегуна, двигайте слайдер слева направо.</span> <span id="close" ontouchstart="closeit()" onclick="closeit()">×</span> </div>
 	<div data-img="i/wn-tips-04.png"><span class="fotorama__select">Следите за&nbsp;собой и&nbsp;другими бегунами, выделив их&nbsp;в&nbsp;таблице.</span> <span id="close" ontouchstart="closeit()" onclick="closeit()">×</span>  </div>
 	<div data-img="i/wn-tips-05.png"><span class="fotorama__select">Фильтруйте таблицу и&nbsp;диаграмму финишей по&nbsp;полу, возрасту, командам и&nbsp;городам.</span> <span id="close" ontouchstart="closeit()" onclick="closeit()">×</span> </div>
-</div>
+</div>-->
 <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
 <script type="text/javascript">
 

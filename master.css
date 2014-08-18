@@ -399,8 +399,12 @@ path {
 		border-color: #2a36b1;
 
 
-		
+
 	}
+    .runrs_item.runr_off .runr_selection_mark {
+
+        border-color: #fff;
+    }
 	.runrs_item.runr_female.selected_runr .runr_selection_mark {
 		background: #f48fb1;
 
@@ -412,6 +416,9 @@ path {
 
 		
 	}
+    .runrs_item.runr_off.selected_runr .runr_selection_mark {
+        background: none;
+    }
 	.runrs_item:after {
 		visibility: hidden;
         display: block;

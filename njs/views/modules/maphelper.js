@@ -356,7 +356,7 @@ var getBasePoints = function(base, boundrect, total_distance){
 
 		//var step = getStep(boundrect.height);
 
-		var step = 300 * px_in_m;
+		var step = 500 * px_in_m;
 		var steps = getSteps(step, px_distance, d3path_node);
 		
 
@@ -590,7 +590,7 @@ var getPoints = function(runners_groups, knodes, seconds, animate, start_time, t
 
 		//console.log(connections);
 	})();*/
-	
+
 	return data;
 	//console.log(complects);
 

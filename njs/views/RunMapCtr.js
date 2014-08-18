@@ -7,6 +7,7 @@ var place_finishers_at_finish = true;
 var SelRunner = function() {};
 provoda.View.extendTo(SelRunner, {
 	createBase: function() {
+        console.log(this.parent_view)
 		var con = document.createElementNS(mh.SVGNS, 'circle');
 		this.c = con;
 		this.d3_c = d3.select(con);
@@ -179,7 +180,7 @@ provoda.View.extendTo(RunMapCtr, {
 		this.path = d3.geo.path().projection(this.projection);
 		this.behavior = d3.behavior.zoom();
 
-		this.behavior.on("zoom", function() {
+		/*this.behavior.on("zoom", function() {
 			if (d3.event) {
 				var result = {};
 				var t = _this.projection.translate();
@@ -198,7 +199,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 			//_this.setVisState('map_event', Date.now());
-		});
+		});*/
 		//this.svg.call(this.behavior);
 		var _this = this;
 
@@ -249,12 +250,13 @@ provoda.View.extendTo(RunMapCtr, {
 	checkSizes: function() {
 		var result = {};
 		var container = this.c.parent();
-		
+
 		if (container[0]){
 			result.width = container.width();
 		}
-
-		result.height = Math.max(window.innerHeight - 80, 580);
+        //var scale = window.innerHeight/600
+        //this.knodes.main_group.attr('transform', 'scale(' + scale + ')')
+		result.height = Math.max(window.innerHeight - 80, 600);
 		this.updateManyStates(result);
 	},
 	updateManyStates: function(obj) {
@@ -397,7 +399,8 @@ provoda.View.extendTo(RunMapCtr, {
 		depends_on: ['basedet', 'basepath', 'scale'],
 		fn: function(basedet, basepath){
 			if (basedet && basepath){
-				this.knodes.base.attr("d", this.path);
+                console.log(basepath)
+				this.knodes.base.attr("d", this.path)    //рисуем маршрут
 				this.knodes.base.projection_key = this.projection.scale() + '_' + this.projection.translate();
 				return Date.now();
 			}

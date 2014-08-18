@@ -63,6 +63,7 @@ provoda.HModel.extendTo(RunnerMapComplex, {
 		this.updateState('geodata', geodata);
 		cvsloader.on('load', function(cvs_data) {
 			this.updateState('cvs_data', cvs_data);
+            this.updateState('start_year', cvs_data.start_year)
 		}, this.getContextOpts());
 
 		var common_sub_opts = {
@@ -81,6 +82,8 @@ provoda.HModel.extendTo(RunnerMapComplex, {
 
 		this.setTime(0.2);
 		this.wlch(this.app, 'current_runner_data');
+        this.wlch(this.app, 'start_year');
+
 	},
 	setTime: function(factor) {
 		this.updateState('selected_time', factor);
