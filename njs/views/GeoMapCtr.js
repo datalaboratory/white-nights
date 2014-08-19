@@ -6,7 +6,7 @@ define(['provoda', 'spv', 'jquery', 'leaflet', './RunMapCtr'], function(provoda,
             run_map: RunMapCtr
         },
         'collch-run_map': true,
-        bindBase: function() {
+        bindBase: function() {/*
 // create a map in the "map" div, set the view to a given place and zoom
             var div = document.createElement('div');
             this.c.append(div);
@@ -37,8 +37,6 @@ define(['provoda', 'spv', 'jquery', 'leaflet', './RunMapCtr'], function(provoda,
             map.keyboard.disable();
             window.map = map;
 
-
-
             //'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.jpg'
             L.tileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-i86l3621/{z}/{x}/{y}.jpg').addTo(this.map);
             this.wch(this, 'vis_con_appended', function(e) {
@@ -61,7 +59,7 @@ define(['provoda', 'spv', 'jquery', 'leaflet', './RunMapCtr'], function(provoda,
                 this.parent_view.promiseStateUpdate('mapheight', e.value);
             });
             this.checkSizes();
-        },
+        */},
         createDD: function() {
         },
         checkSizes: function() {

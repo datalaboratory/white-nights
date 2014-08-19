@@ -118,6 +118,10 @@ provoda.View.extendTo(RunMapCtr, {
 
 		this.svg = d3.select(svg);
 
+        //this.svg = d3.select(map.getPanes().overlayPane).append('svg').attr('width', 1000).attr('height',1000).style('zoom', 1/0.778).style('left',20).append('g')
+
+
+
 /*
 		this.dot = this.svg.append('circle')
 			.attr("r", 5)
@@ -240,8 +244,7 @@ provoda.View.extendTo(RunMapCtr, {
 			this.checkSizes();
 			this.root_view.promiseStateUpdate('mapheight', e.value);
 		});
-		
-		
+
 		this.wch(this, 'runners_rate', function(e){
 			this.root_view.promiseStateUpdate('runners_rate', e.value);
 		});
@@ -254,8 +257,6 @@ provoda.View.extendTo(RunMapCtr, {
 		if (container[0]){
 			result.width = container.width();
 		}
-        //var scale = window.innerHeight/600
-        //this.knodes.main_group.attr('transform', 'scale(' + scale + ')')
 		result.height = Math.max(window.innerHeight - 80, 600);
 		this.updateManyStates(result);
 	},
@@ -335,8 +336,10 @@ provoda.View.extendTo(RunMapCtr, {
 				this.projection.scale(1).translate([0, 0]);
 				var b = this.path.bounds(geodata),
 					// в s задаётся общий масштаб пары трек-карта
-					s = 0.85 / Math.max((b[1][0] - b[0][0]) / this.width, (b[1][1] - b[0][1]) / this.height),
-					t = [(this.width*0.9 - s * (b[1][0] + b[0][0])) / 2, (this.height*1.1 - s * (b[1][1] + b[0][1])) / 2];
+                    width = this.width,
+                    height = this.height,
+					s = 0.85 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+					t = [(width * 0.9 - s * (b[1][0] + b[0][0])) / 2, (height * 1.1 - s * (b[1][1] + b[0][1])) / 2];
 
 				this.behavior.translate(t).scale(s);
 
@@ -399,7 +402,6 @@ provoda.View.extendTo(RunMapCtr, {
 		depends_on: ['basedet', 'basepath', 'scale'],
 		fn: function(basedet, basepath){
 			if (basedet && basepath){
-                console.log(basepath)
 				this.knodes.base.attr("d", this.path)    //рисуем маршрут
 				this.knodes.base.projection_key = this.projection.scale() + '_' + this.projection.translate();
 				return Date.now();
@@ -476,7 +478,7 @@ provoda.View.extendTo(RunMapCtr, {
 	},
 	'stch-translate': function(state) {
 		var translate_str =  "translate(" + state + ")";
-		this.knodes.main_group.attr("transform", translate_str);
+		//this.knodes.main_group.attr("transform", translate_str);
 		//this.dot.attr("transform", translate_str);
 		// Сдвиги для графиков высот
 		// this.knodes.bottom_group.attr("transform", "translate(" + [state[0], 0] + ")");
