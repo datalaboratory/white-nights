@@ -59,18 +59,6 @@
 					<div>
 						<img src="i/littlesun.png" alt="">
 					</div>
-<!-- 					<div
-
-						pv-class=" {{ !( time_value|compareTime: '0:30:00' : '3:30:00' ) && 'hidden'}}"
-						class="hidden">
-						<img src="i/small-rain.gif" alt="">
-					</div>
-					<div
-
-						pv-class=" {{ !( time_value|compareTime: '3:30:00' : '7:00:00' ) && 'hidden'}}"
-						class="hidden">
-						<img src="i/rain.gif" alt="">
-					</div> -->
 				</div>
 				<div>
 					<div class="we_temperature">+20° <span class="we_wind">&#8598; 2 м/c </span>
@@ -135,71 +123,6 @@
 
 								<span class="marker"></span>
 							</div>
-							<!-- <div 
-								class="marker_c hidden"
-								pv-class="marker_c {{!end_point && 'hidden'}}"
-								pv-props="
-									style.left: {{end_point.0}}
-									style.top: {{mapheight - 5}}
-									
-								">
-
-								<span class="marker"></span>
-								<div class="marker_text"  style="bottom: auto;top: 5px;">
-									<span style="font-weight:700">Финиш</span>
-									125
-									м над уровнем моря
-								</div>
-							</div>
-							<div 
-								class="marker_c hidden vertline"
-								pv-class="marker_c vertline {{!end_point && 'hidden'}}"
-								style="border-left-color:#f31f4a"
-								pv-props="
-									style.top: {{end_point.1}}
-									style.left: {{end_point.0}}
-									style.height:  {{(mapheight - 5 - 19) - end_point.1}}
-								">
-								
-
-
-							</div> -->
-
-
-							<!-- подпись для высоты 1 -->
-							<!-- 							<div 
-								class="marker_c"
-								pv-class="marker_c"
-								pv-props="
-									style.top: {{mapheight - 70}}
-									style.right:   {{track_left_padding + 265}}
-									
-								">
-								<div class="marker_text altt_desc"  style="bottom: auto;top: 8px;">
-									+23 м
-								</div>
-							</div> -->
-
-							<!-- подпись для высоты 2 -->
-							<!--<div 
-								class="marker_c"
-								pv-props="
-									style.top: {{mapheight - 70}}
-									style.right:   {{(track_left_padding || 0) + 70}}
-								">
-								<div class="marker_text altt_desc"  style="bottom: auto;top: 8px;">
-									+42 м
-								</div>
-							</div>
-							<div 
-								class="marker_c hidden"
-								pv-class="marker_c  {{!point_left_edge && 'hidden'}}"
-								pv-props="
-									style.top: {{mapheight - 46}}
-									style.right:   {{(track_left_padding || '0')}}
-								">
-								<img src="i/alt_mth.svg" alt="">
-							</div> -->				
 							
 						</div>
 
@@ -216,151 +139,12 @@
 
 								<span class="marker mark-start"></span>
 							</div>
-							<!-- <div 
-								class="marker_c hidden"
-								pv-class="marker_c {{!start_point && 'hidden'}}"
-								style="left:18px"
-								pv-props="
-									style.top: {{start_point.1}}
-									
-								">
-
-								<span class="marker mark-start"></span>
-							</div>
-							<div 
-								class="marker_c hidden horline"
-								pv-class="marker_c horline {{!start_point && 'hidden'}}"
-								style="border-top-color:#ffcb00"
-								pv-props="
-									style.top: {{start_point.1}}
-									style.width:  {{start_point.0 - 15}}
-								">
-								<div class="marker_text" style="margin-left:15px;">
-									<span style="font-weight:700">Старт</span>
-									121 м н.у.м.</div>
-							</div> -->
 
 						</div>
-						
 
-
-
-						<!-- <div 
-							class="marker_c hidden "
-							pv-class="marker_c  {{!point_left_edge && 'hidden'}}"
-							pv-props="
-								style.top: {{point_left_edge.1}}
-								style.width:  {{point_left_edge.0}}
-							">
-							<div class="marker_text altt_desc"  style="left:30px;top:0px">
-								+21 м
-							</div>
-							<img src="i/alt2_mth.svg" alt="">
-						</div>
-
-						<div 
-							class="marker_c hidden "
-							pv-class="marker_c  {{!point_left_edge && 'hidden'}}"
-							pv-props="
-								style.top: {{point_left_edge.1}}
-								style.width:  {{point_left_edge.0}}
-							">
-							<div class="marker_text altt_desc"  style="left:30px;top:30px">
-								+12 м
-							</div>
-							<img src="i/alt2_mth.svg" alt="">
-						</div> -->
-							
-						<!-- help points lines -->
-<!-- 						<div>
-							<div 
-								class="marker_c hidden horline"
-								pv-class="marker_c horline {{!point_left_edge && 'hidden'}}"
-								pv-props="
-									style.top: {{point_left_edge.1}}
-									style.width:  {{point_left_edge.0 - 15}}
-								">
-
-							</div>
-
-
-							<div 
-								class="marker_c hidden vertline"
-								pv-class="marker_c vertline {{!point_bottom_middle && 'hidden'}}"
-								pv-props="
-									style.top: {{point_bottom_middle.1}}
-									style.left: {{point_bottom_middle.0}}
-									style.height:  {{(mapheight - 5 - 19) - point_bottom_middle.1}}
-								"></div>
-							<div 
-								class="marker_c hidden vertline"
-								pv-class="marker_c vertline {{!point_bottom_edge && 'hidden'}}"
-								pv-props="
-									style.top: {{point_bottom_edge.1}}
-									style.left: {{point_bottom_edge.0}}
-									style.height:  {{(mapheight - 5 - 19) - point_bottom_edge.1}}
-								"></div>
-						</div>
- -->						
 					</div>
 					
 					<div class="factoids" pv-class="factoids {{current_runner_data && 'hidden'}}">
-						<!-- Фатоиды -->
-
-<!-- 						<div pv-props="
-									style.top:   {{track_top_padding +  (trackheight * 0.12)}}
-									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-									style.width: {{trackwidth * 1}}
-								"
-								pv-class="factoid {{ !( time_value|compareTime: '0:00:00' : '1:20:00' ) && 'hidden'}}" class="factoid hidden">
-							<h5 class="factoid_h">Стартовый взнос</h5>
-							<div style="margin-left:-23px;">
-								<table class="factoid_d" >
-									<tr>
-										<td><img src="i/usa-flag.png" width=16 height=9 /></td>
-										<td width=60>Нью-Йорк</td>
-										<td>377&thinsp;$</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td>Бостон</td>
-										<td>150…300&thinsp;$</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td>Чикаго</td>
-										<td>175…200&thinsp;$</td>
-									</tr>
-									<tr>
-										<td height=15><img src="i/de-flag.png" width=16 height=9 /></td>
-										<td>Берлин</td>
-										<td style="padding-left:8px;">60…110&thinsp;€</td>
-									</tr>
-									<tr>
-										<td height=20><img src="i/uk-flag.png" width=16 height=9 /></td>
-										<td>Лондон</td>
-										<td>100&thinsp;£</td>
-									</tr>
-									<tr>
-										<td height=15><img src="i/ru-flag.png" width=16 height=9 /></td>
-										<td>Москва</td>
-										<td style="pmargin-left:-8px;">1000…2000&thinsp;&#8399;</td>
-									</tr>
-								</table>
-							</div>
-						</div> -->
-
-<!-- 						<div
-							pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.45)}}
-								style.left:  {{track_left_padding + (trackwidth * 0.1)}}
-								style.width: {{trackwidth * 0.25}}
-							"
-							pv-class="factoid {{ !( time_value|compareTime: '5:00:00' : '7:00:00' ) && 'hidden'}}"
-							class="factoid hidden">
-							<h5 class="factoid_h">≈&thinsp;2000 ккал</h5>
-							<div class="factoid_d">сжигает марафонец за&nbsp;время&nbsp;забега</div>
-						</div> -->
 
 							<div pv-props="
 								style.top:   {{track_top_padding +  (trackheight * 0.03)}}
@@ -401,94 +185,6 @@
 							<div class="factoid_d"></div>
 						</div>
 
-<!-- 						<div
-							pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.44)}}
-								style.left:  {{track_left_padding + (trackwidth * 0.1)}}
-								style.width: {{trackwidth * 0.25}}
-							"
-							pv-class="factoid {{ !( time_value|compareTime: '2:03:38' : '5:00:00' ) && 'hidden'}}"
-							class="factoid hidden">
-							<h5 class="factoid_h">2:03:38 <span><img src="i/record.png" width=30 height=25 /></span></h5>
-							<div class="factoid_d">мировой рекорд у мужчин, 2:15:25 — у женщин</div>
-						</div>	 -->
-
-<!-- 						<div
-							pv-props="
-								
-								style.top:   {{track_top_padding +  (trackheight * 0.15)}}
-								style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-								style.width: {{trackwidth * 0.25}}
-							"
-							pv-class="factoid {{ !( time_value|compareTime: '3:30:00' : '4:30:00' ) && 'hidden'}}"
-							class="factoid hidden">
-							<img class="factoid_img" src="i/water.png" width=106 height=52 />
-							<h5 class="factoid_h">5000 л воды</h5>
-							<div class="factoid_d">выпили марафонцы на&nbsp;дистанции</div>
-						</div> -->
-
-<!-- 						<div pv-props="
-								
-								style.top:   {{track_top_padding +  (trackheight * 0.15)}}
-								style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-								style.width: {{trackwidth * 0.20}}
-							"
-							pv-class="factoid {{ !( time_value|compareTime: '4:30:00' : '5:30:00' ) && 'hidden'}}"
-							class="factoid hidden">
-
-							<img class="factoid_img" src="i/winners.png" width=100 height=19/>
-							<div class="factoid_d">Призовые места заняли спортсмены</div>
-							<h5 class="factoid_h" style="margin-top:0px; line-height: 22px;">из Украины, Казахстана и&nbsp;России</h5>
-
-						</div> -->
-
-<!-- 						<div pv-props="
-								
-								style.top:   {{track_top_padding +  (trackheight * 0.12)}}
-								style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-								style.width: {{trackwidth * 0.20}}
-							"
-							pv-class="factoid {{ !( time_value|compareTime: '5:30:00' : '6:30:00' ) && 'hidden'}}"
-							class="factoid hidden">
-							<img class="factoid_img" src="i/reward.png" width=91 height=102 style="margin-bottom:-5px;"/>
-							<h5 class="factoid_h">350&thinsp;000 &#8399;</h5>
-							<div class="factoid_d">в&nbsp;награду за&nbsp;первое место и&nbsp;медали всем финишировавшим (неделю спустя)</div>
-						</div> -->
-
-<!-- 							<div
-							pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.75)}}
-								style.left:  {{track_left_padding + (trackwidth * 0.76)}}
-								style.width: {{trackwidth * 0.25}}
-							"
-							pv-class="factoid {{ !( time_value|compareTime: '3:00:00' : '4:00:00' ) && 'hidden'}}"
-							class="factoid hidden">
-								<h5 class="factoid_h">Десятки волонтёров</h5>
-								<div class="factoid_d">и сотни болельшиков поддерживали бегунов</div>
-							</div> -->
-
-<!-- 						<div
-							pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.65)}}
-								style.left:  {{track_left_padding + (trackwidth * 0.76)}}
-								style.width: {{trackwidth * 0.25}}
-							"
-							pv-class="factoid {{ !( time_value|compareTime: '4:00:00' : '7:00:00' ) && 'hidden'}}"
-							class="factoid hidden">
-								<img class="factoid_img" src="i/photo.png" width=130 height=97/>
-								<h5 class="factoid_h">На 34-м км</h5>
-								<div class="factoid_d">обосновались болельщики из команды Moskva River Runners</div>
-						</div> -->
-
-<!-- 						<div pv-props="
-									style.top:   {{track_top_padding +  (trackheight * 0.5)}}
-									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-									style.width: {{trackwidth * 1}}
-								"
-								pv-class="factoid {{ !( time_value|compareTime: '3:30:00' : '5:30:00' ) && 'hidden'}}" class="factoid hidden">
-							<h5 class="factoid_h" style="margin-left:-10px;">+230 м</h5>
-							<div class="factoid_d">суммарного подъема — <br>это&nbsp;77 этажей или <br>высота ГЗ&nbsp;МГУ со&nbsp;шпилем</div>
-						</div> -->
 
 						<!-- Достопримечательности -->
 						<img  pv-props="
@@ -538,45 +234,6 @@
 								pv-class="factoid" class="factoid hidden"
 
 								src="i/d-kunstkamera.png" width=65 height=65 />
-
-<!-- 						<div pv-props="
-									style.top:   {{track_top_padding +  (trackheight * 0.6)}}
-									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-									style.width: {{trackwidth * 0.25}}
-								"
-								pv-class="factoid {{ !( time_value|compareTime: '5:30:00' : '6:30:00' ) && 'hidden'}}" class="factoid hidden">
-							<div class="factoid_d">Московский марафон — последний финиш перед реконструкцией Большой спортивной арены</div>
-							<h5 class="factoid_h" style="margin-left:0px;">стадиона Лужники</h5>
-						</div> -->
-
-<!-- 						<div  pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.1)}}
-								style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-								style.width: {{trackwidth * 0.25}}
-								
-								"
-								pv-class="factoid {{ !( time_value|compareTime: '1:20:00' : '3:30:00' ) && 'hidden'}}" class="factoid hidden">
-
-								<img class="factoid_img" src="i/slope.png" width=82 height=68/>
-								<h5 class="factoid_h">5,5 м на км</h5>
-								<div class="factoid_d">составил уклон на трассе, превысив олимпийский
-						максимум в&nbsp;1&nbsp;м на&nbsp;км</div>
-							</div> -->
-
-<!-- 							<div  pv-props="
-									style.top:   {{track_top_padding +  (trackheight * 0.5)}}
-									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-									style.width: {{trackwidth * 0.25}}
-								
-								"
-								pv-class="factoid {{ !( time_value|compareTime: '1:50:00' : '3:30:00' ) && 'hidden'}}" class="factoid hidden">
-									<img class="factoid_img" src="i/small-globe.png" width=100 height=96/>
-									<div class="factoid_d">В марафоне участвовали спортсмены со всего мира: <b>из Парижа, Лондона, Токио, итальянского городка Кастровиллари, Калифорнии, Австралии, Роттердама и Бангкока.</b></h5></div>
-							</div> -->
-
-
-
-
 
 					</div>
 					
@@ -880,7 +537,7 @@
 </script>
 <!-- /Tips -->
 
-<div id="dom-templates" style="display:none">
+<!--<div id="dom-templates" style="display:none">
 	<div 
 		class="complex-page inactive-page"
 		pv-class="
@@ -902,7 +559,7 @@
 	<div class="runner_page big_block">
 		<span pv-text="{{full_name}}"></span>
 	</div>
-</div>
+</div>-->
 
 </body>
 </html>

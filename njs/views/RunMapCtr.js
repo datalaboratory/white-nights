@@ -7,7 +7,6 @@ var place_finishers_at_finish = true;
 var SelRunner = function() {};
 provoda.View.extendTo(SelRunner, {
 	createBase: function() {
-        console.log(this.parent_view)
 		var con = document.createElementNS(mh.SVGNS, 'circle');
 		this.c = con;
 		this.d3_c = d3.select(con);
@@ -112,7 +111,12 @@ provoda.View.extendTo(RunMapCtr, {
 	},
 	
 	createBase: function() {
-
+        var e = new Error('');
+        var stack = e.stack.replace(/^[^\(]+?[\n$]/gm, '')
+            .replace(/^\s+at\s+/gm, '')
+            .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@')
+            //.split('\n');
+        console.log(stack);
 		var svg = document.createElementNS(mh.SVGNS, 'svg');
 		this.c = $(svg).css('display', 'none');
 
