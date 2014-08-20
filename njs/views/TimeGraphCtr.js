@@ -9,7 +9,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 		this.svgc = $(svg).css('display', 'none');
 		this.svg = d3.select(svg);
 
-		this.wch(this.root_view, 'maxwdith', spv.debounce(function() {
+		this.wch(this.root_view, 'maxwidth', spv.debounce(function() {
 			this.checkSizes();
 		},100));
 		this.wch(this, 'vis_con_appended', function(e) {
@@ -54,7 +54,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			result.width = container.width();
 		}
 		this.original_height = container.height();
-//		result.height = ;
+
 		this.updateManyStates(result);
 	},
 	updateManyStates: function(obj) {
@@ -89,7 +89,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 					value: cur
 				});
 				cur += step;
-				//cur = Math.min(cur, cvs_data.run_gap);
+
 			}
 			items.pop();
 			items.push({
@@ -233,18 +233,12 @@ provoda.View.extendTo(TimeGraphCtr, {
 			if ( !width || !vis_ready){
 				return;
 			}
-			//var container = this.c.parent();
-			//container.css('height', height);
 			this.width = width;
-			//this.height = height;
 			this.svgc.css('display', '');
 			this.svg.attr({
 				width: this.width
-				//height: this.height
 			});
 
-	
-				
 			return Date.now();
 		}
 	},
@@ -310,7 +304,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 
 			
 			var px_step = this.px_step;
-			var steps = this.width/px_step;
+			var steps = this.width / px_step;
 
 			steps = Math.floor(steps);
 
@@ -327,28 +321,17 @@ provoda.View.extendTo(TimeGraphCtr, {
 					var cur = runners[i];
 					if (cur.end_time > range_start &&  cur.end_time <= range_end){
 						result.push(cur);
-						//cur.finish_g = result;
-					} else {
-
 					}
 				}
 				return result;
 			};
 			var getRunnersByTime = function(runners) {
-				//var has_data = {};
 				var runners_by_time = [];
-				//var max_runners;
 				
 				for (var i = 0; i < steps; i++) {
 					var array = makeStep(i, runners);
 					runners_by_time.push(array);
-				//	max_runners = Math.max(max_runners, array.length);
-					if (array.length){
-					//	has_data[i] = array.length;
-					}
-
 				}
-			//	runners_by_time.max_runners = max_runners;
 				return runners_by_time;
 			};
 
@@ -407,7 +390,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 		}
 	},
 	checkPointerMove: function(e) {
-			//this.coffset
+
 		var pos = e.pageX - this.coffset.left;
 
 
@@ -422,7 +405,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			return;
 		}
 
-		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top))/base_graph_data.height_factor);
+		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top)) / base_graph_data.height_factor);
 
 		if (pos_y < 0){
 			this.promiseStateUpdate('selector', false);
@@ -463,15 +446,6 @@ provoda.View.extendTo(TimeGraphCtr, {
 				matched = getByS(sel.pos_x, sel.pos_y - 1);
 			}
 
-
-
-			/*
-			
-			if (matched){
-				console.log(matched.full_name);
-			} else {
-				console.log(sel.pos_x, sel.pos_y);
-			}*/
 			if (!matched){
 				return;
 			} else {
@@ -499,7 +473,6 @@ provoda.View.extendTo(TimeGraphCtr, {
 				return;
 			}
 
-
 			var _this = this;
 
 			var reversed_groups = current_runners_data.runners_groups.slice();
@@ -519,8 +492,8 @@ provoda.View.extendTo(TimeGraphCtr, {
 			var getRunByDPoints = function(array, prev_array) {
 
 				var result = [];
-                var result1 = []
-                var result2 = []
+                var result_left = []
+                var result_right = []
 				for (var i = 0; i < steps; i++) {
 					var x1 = i * px_step;
 					var x2 = x1 + px_step;
@@ -529,9 +502,6 @@ provoda.View.extendTo(TimeGraphCtr, {
 						var prev_v = prev_array[i *2];
 						y = y - (_this.height - prev_v.y);
 					}
-					
-
-
 
 					result.push({
 						x: x1,
@@ -541,7 +511,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 						y: y
 					});
                     if (i <= cur_step) {
-                        result1.push({
+                        result_left.push({
                             x: x1,
                             y: y
                         }, {
@@ -549,7 +519,7 @@ provoda.View.extendTo(TimeGraphCtr, {
                             y: y
                         });
                     } else {
-                        result2.push({
+                        result_right.push({
                             x: x1,
                             y: y
                         }, {
@@ -558,14 +528,14 @@ provoda.View.extendTo(TimeGraphCtr, {
                         });
                     }
 				}
-                if (!result2.length) result2.push({
+                if (!result_right.length) result_right.push({
                     x: x2,
                     y: y
                 }, {
                     x: x2,
                     y: y
                 });
-				return [result, result1, result2];
+				return [result, result_left, result_right];
 			};
 
 			reversed_groups.forEach(function(el, i) {

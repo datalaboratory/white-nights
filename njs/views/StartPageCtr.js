@@ -32,9 +32,6 @@ provoda.View.extendTo(StartPageCtr, {
 		this.promiseStateUpdate('header_height', this.header.height());
 
 
-
-
-
 		var _this = this;
 		$(window).on('resize', spv.throttle(function() {
 			_this.checkListWidth();
@@ -55,8 +52,7 @@ provoda.View.extendTo(StartPageCtr, {
 
 			_this.checkFixPos();
 		});
-		//
-		//
+
 	},
 	'after-collch-runners_filtered':function() {
 		this.nextTick(function() {
@@ -88,7 +84,6 @@ provoda.View.extendTo(StartPageCtr, {
 			});
 		}
 
-		//var possible_top = 
 	},
 	checkListPos: function() {
 		this.list_offset = this.list.offset();
@@ -101,33 +96,6 @@ provoda.View.extendTo(StartPageCtr, {
 		makeSearch: spv.debounce(function(e, node) {
 			this.RPCLegacy('makeSearch', $(node).val());
 		}, 200)
-	},
-	setFilterBy: function(type, scope) {
-		var item = scope.filtr_item;
-		this.RPCLegacy('setFilterBy', type, !item.novalue && item.label);
-	},
-	tpl_r_events:{
-		filter_gender:{
-			setFilterBy: function(e, node, scope) {
-				this.setFilterBy('gender', scope);
-			}
-		},
-		filter_team: {
-			setFilterBy: function(e, node, scope) {
-				this.setFilterBy('team', scope);
-				
-			}
-		},
-		filter_ages:{
-			setFilterBy: function(e, node, scope) {
-				this.setFilterBy('ages', scope);
-			}
-		},
-		filter_city:{
-			setFilterBy: function(e, node, scope) {
-				this.setFilterBy('city', scope);
-			}
-		}
 	}
 });
 return StartPageCtr;

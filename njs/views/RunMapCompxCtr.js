@@ -16,7 +16,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 		var svg;
 		svg = document.createElementNS(mh.SVGNS, 'svg');
-		//this.c = $(svg).css('display', 'none');
+
 		$(svg).appendTo(this.tpl.ancs['legendage']);
 		
 		this.legendage = d3.select(svg);
@@ -62,7 +62,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 					$(document).off('mousemove', watchPos);
 				});
 			});
-		this.wch(this.root_view, 'maxwdith', spv.debounce(function() {
+		this.wch(this.root_view, 'maxwidth', spv.debounce(function() {
 			this.con_offset = null;
 			this.checkSizes();
 		},100));
@@ -147,7 +147,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		var part_height = height/part_num;
 		var lines = [];
 
-		for (var i = 1; i < part_num; i++) {
+		for (i = 1; i < part_num; i++) {
 			lines.push({
 				y: Math.round(i * part_height) + 0.5
 			});
@@ -187,6 +187,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			y: height
 		});
 		this.promiseStateUpdate('count_lines', lines);
+
 		this.countlines = lines;
 
 	},
@@ -199,8 +200,6 @@ provoda.View.extendTo(RunMapCompxCtr, {
             var container = this.tpl.ancs['legendcount'];
 
 			var width = container.width();
-
-			//var count = mh.getStepValueByHeight(width, runners_rate.step);
 
 			this.tpl.ancs['legendcounttext'].empty();
 
@@ -276,16 +275,12 @@ provoda.View.extendTo(RunMapCompxCtr, {
 				
 				var el_top = 0;
 				
-                // console.log(array);
-				
 				for (var i = 0; i < cvs_data.big_genders_groups[1].age_groups.length; i++) {
 
                     var cur = cvs_data.big_genders_groups[1].age_groups[i];
 
                     var rstart = cvs_data.big_ages_ranges[i].start;
                     var rend   = cvs_data.big_ages_ranges[i].end;
-
-                    // console.log(rstart);
 
 					var y = el_top;
 					var rheight = height_factor * (rend - rstart + 1);
@@ -301,11 +296,9 @@ provoda.View.extendTo(RunMapCompxCtr, {
 						height: rheight,
 						fill: color
 					});
-
-                    // console.log(rstart, rend, color, x, y, rwidth, rheight);
 				
 				    el_top = el_top + rheight + vert_space;
-				};
+				}
 
 			})();
 
@@ -333,18 +326,17 @@ provoda.View.extendTo(RunMapCompxCtr, {
 					}                
                 }
 				
-				for (var i = 0; i < cvs_data.big_genders_groups[0].age_groups.length; i++) {
+				for (i = 0; i < cvs_data.big_genders_groups[0].age_groups.length; i++) {
 
-                    var cur = cvs_data.big_genders_groups[0].age_groups[i];
+                    cur = cvs_data.big_genders_groups[0].age_groups[i];
 
-                    var rstart = cvs_data.big_ages_ranges[i].start;
-                    var rend   = cvs_data.big_ages_ranges[i].end;
+                    rstart = cvs_data.big_ages_ranges[i].start;
+                    rend   = cvs_data.big_ages_ranges[i].end;
 
-                    // console.log(rstart);
 
 					var y = el_top;
 					var rheight = height_factor * (rend - rstart + 1);
-					var rwidth  = (cur.length * width_factor / rheight);
+					rwidth  = (cur.length * width_factor / rheight);
 					var x = width - limit;
 					                    
 					var color = colors.getGradColor(i+1, 1, array.length, grad);
@@ -355,17 +347,15 @@ provoda.View.extendTo(RunMapCompxCtr, {
 						width:  rwidth,
 						height: rheight,
 						fill: color
-					});
+					})
 
                     result_data.text_desc[i] = {
                      x: x + max_length,
                      y: y + rheight / 2
-                    };
-
-                    // console.log(rstart, rend, color, x, y, rwidth, rheight);
+                    }
 				
 				    el_top = el_top + rheight + vert_space;
-				};
+				}
 
 			})();
 			return result_data;
@@ -385,30 +375,14 @@ provoda.View.extendTo(RunMapCompxCtr, {
 				var cur = cvs_data.big_ages_ranges[i];
 				$('<span class="textblock"></span>').appendTo(dfrg).css({
 					top: Math.round(legend_age.text_desc[i].y),
-					left: Math.round(legend_age.text_desc[i].x),
+					left: Math.round(legend_age.text_desc[i].x)
 				}).text(cur.label);
-				//cvs_data.big_ages_ranges[i]
 			}
 			con.append(dfrg);
 
 		}
 	},
-	/*'compx-bigdata': {
-		depends_on: ['geodata', 'cvs_data'],
-		fn: function(geodata, cvs_data) {
-			if (geodata && cvs_data){
-				getHardMap(cvs_data, geodata, this.tpl.ancs['map-con'][0]);
-				return {
-					geodata: geodata,
-					cvs_data: cvs_data
-				};
-			}
-		}
-	},*/
 
-	/*
-	var 
-		var pjr = this.projection(pp.target);*/
 	//point_left_edge
 	//point_bottom_edge
 	//point_bottom_middle
@@ -460,27 +434,6 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			}
 		}
 	},
-	'compx-altitude_p1':{
-		depends_on: ['d3map_dets', 'geodata', 'end_point'],
-		fn: function(d3map_dets, geodata, end_point) {
-			if (!d3map_dets || !geodata || !end_point){
-				return;
-			}
-
-			var pp = this.getPointPxByDistance(geodata, 27132);
-			pp.rel = pp[2] - end_point[2];
-			return pp;
-			
-		}
-	},
-	'compx-altitude_p2':{
-		depends_on: ['d3map_dets', 'geodata', 'end_point'],
-		fn: function(d3map_dets, geodata, end_point) {
-			if (!d3map_dets || !geodata || !end_point){
-				return;
-			}
-		}
-	},
 	'compx-mapcover-hor': {
 		depends_on: ['trackwidth', 'track_left_padding'],
 		fn: function(trackwidth, track_left_padding) {
@@ -510,19 +463,6 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			}
 
 		}
-	},
-	/*'stch-start_point': function(state) {
-		//this.start_point.toggleClass('')
-	},
-	'stch-end_point': function(state) {
-
-	},*/
-
-	tpl_events:{
-		
-	},
-	tpl_r_events:{
-		
 	}
 });
 return RunMapCompxCtr;

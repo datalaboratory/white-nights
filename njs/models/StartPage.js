@@ -216,9 +216,6 @@ BrowseMap.Model.extendTo(StartPage, {
 			setFilterResult(result, el.name, el.no_flabel);
 			
 		});
-		
-		//var ages;
-		//spv.makeIndex()
 
 
 		var max_age = 0;
@@ -330,10 +327,6 @@ BrowseMap.Model.extendTo(StartPage, {
 		if (filters && filters.length){
 
 			result = _.intersection.apply(_, caches);
-		//	console.log(result);
-			//return result;
-		} else {
-			//return result;
 		}
 		var rules = [{field: ['states', 'result_time']}, {field: ['states', 'pos']}, {field: ['states', 'num']}];
 		result.sort(function(a, b) {

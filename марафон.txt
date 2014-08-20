@@ -1,0 +1,251 @@
+Задачи от Тани:
+1)связь слайдера и диаграммы финишей, изменение размера кубиков на диаграмме
+2)изменение змея:
+	1.масштаб
+	2.ориентация относительно трека
+	3.радиус кривизны
+	4.цвет
+3)подложить настоящую карту
+4)новые фильтры
+
+
+2 мега-объекта, AppModel и AppView, у обоих вызывается init() в верхнем скрипте loader.js
+	
+AppView
+	StartPageCtr
+	RunnerCtr	
+	RunMapCompxCtr
+		GeoMapCtr
+			RunMapCtr
+				SelRunner
+		TimeGraphCtr
+
+AppModel
+	StartPage
+		FilterItem
+		Runner
+	RunnerMapComplex
+		GeoMap
+		TimeGraph
+						AppModel
+
+AppModel в init() создает new StartPage() и init() её
+StartPage вызывает cvsloader
+
+Cvsloader.js: eventor = provoda.Eventor, eventor.init()
+Данные: создается iframe, сдвинутый и невидимый, с содержимым страницы с данными (data/data3/data3.html), страница создает из данных объект, iframe шлет эти данные window после их загрузки.
+Дальше, обрабатываются в checkData()
+
+RunnerMapComplex.js  - чтение геоданных ! устанавливаем дефолтную позицию слайдера
+
+	StartPage.js
+Про фильтры.
+
+Сейчас существует 5 фильтров: пол, возраст, команда, город, страна. Фильтр по странам не используется.
+Аналогично команде, городу и стране можно фильтровать по любому из свойств в raw_map_st (Runner.js - "модель бегуна").
+Обнаружила, например, трех человек c отрицательным возрастом, фильтруя по году рождения. (! у них совпадает номер и год рождения) 
+
+
+!Пономарев Дмитрий, Владимир  - 1979г.р. (укaзан 2041)
+!Межевой Владимир, Нижегородская обл. - 1951г.р. (указан 2042)
+!Чугуров Евгений, Чапаевск - 1980 (указан 2044)
+!Ефремов Сергей, Санкт-Петербург - 1953г.р (указан 1998)
+
+Соловьев Владимир (Сильвия) - Головьев Владимир (Сильвия)?
+ 		- сравнила данные по "белым ночам" за 2013 и 2014г.
+
+Еще у нас 114 сошедших, а мы не знаем их пол (в списке все выделяются синим) и не умеем ничего про них показывать.
+
+!На странице возраст вычислялся как 2013-birthyear - давало ошибку на год
+!Селиванов Артем - 1997гр - 17 лет - не попадает в возрастные группы
+
+!Фильтры не работают при поиске по имени
+
+SwitchSelectRunner - arr.length == 5 - ограничение на количество выделенных бегунов
+page_limit - количество строчек(100), показанных в списке участников - столько же строчек будет прибавляться по кнопке
+
+getIndexes - устанавливаем значения фильтров, отдельно для возраста и пола и в цикле для всего остального 
+	setFilterResult - ей устанавливаем
+
+init(opts)
+	getIndexes: function(runners, cvsdata)
+		getGenderGroups: function(runners)
+		getAgesGroups: function(runners, age_ranges, cvsdata)
+	makeFiltersResult: function(filters, caches)
+		checkRunners: function(reset_page)
+
+switchSelectRunner: function(md)
+makeSearch: function(query)
+search_fields: [['states','num'], ['states','full_name'], ['states','gender_pos']]
+getFilterData: function(runners, field, limit)
+setFilterBy: function(type, name)
+checkFilters: function()
+showMore: function()
+
+						AppView
+
+	RunMapCompxCtr.js
+Рисование легенды и слайдера.
+	
+createTemplate() - делает штуку PvTemplate, записывается в tpl
+ancs - от anchor, видимо
+tpl.ancs - содержит среди прочего данные о том, каким элементам на странице соответствуют (на данный момент):
+	controlls - блок со слайдером
+	legendage - возраст и пол
+	legendage_textc  - возраст и пол, подпись
+	legendcount - толщина змея
+	legendcounttext - толщина змея, подпись
+	mapcover - картинка-карта
+	mthswitch - кусок заголовка, который меняется по наведению
+	scroll_marker  - таскалка от слайдера
+Например, this.tpl.ancs['scroll_marker'] 
+	>[div.scroll_marker, context: div.scroll_marker, jquery: "2.0.2", constructor: function, init: function, selector: ""…]
+ т.е элемент div, который эта таскалка
+PvTemlate выбирает элементы co свойством pv-anchor, внутри элемента, установленного как context, this.c
+cur_node - current node
+dfrg - documentFragment
+
+createDetails() - создание svg для легенды, слайдера, обработка событий итд
+createLegendCount() - рисование легенды для толщины змея, количество линий, цвет, толщина линий итп
+compx-curpos  -двигаем слайдер
+compx-time_value - устанавливаем по слайдеру текущее время, "time_value"
+compx-legend_count - подписываем легенду для толщины змея в соответствии с данными о бегунах
+compx-legend_age - рисуем легенду про возраст и пол
+compx-legend_age_text - подписываем
+
+compx-point_bottom_middle
+compx-point_bottom_edge
+compx-point_left_edge
+compx-start_point
+compx-end_point				- тут какое-то выравнивание
+compx-altitude_p1
+compx-altitude_p2  -return
+compx-mapcover-hor
+compx-mapcover-vert
+
+root_view  у нас AppView
+
+	TimeGraphCtr.js
+Рисуем график
+bindBase() - создание svg, групп для элементов, установка размеров, события (mouseenter, mousemove, mouseleave - обновление позиции для выделенного бегуна - checkPointerMove)
+	px_step - ширина квадратиков (установлена 3px)
+	y_scale - регулирует высоту (максимальная высота графика = 1/y_scale, установлена 1.2)
+compx-time_value - текущее время по слайдеру в секундах, "time_value"
+compx-hours_steps - создает массив для подписей, время в секундах с начала марафона, в мс с начала дня, марафона, "hours_steps"
+compx-hours_marks - подписывает слайдер, вверху и внизу
+compx-timesteps - создает массив значений времени через 20мин, "timesteps"
+compx-marks - рисует риски на слайдере через 20мин
+compx-marks_done  ?
+compx-bd  -про ширину ? устанавливает ширину svg и возвращает Date.now() в "bd"
+compx-total_distance - длина нарисованного по геоданным маршрута, "total_distance"
+compx-basedet - проверяет, установлена ли уже ширина и есть ли длина маршрута, возвращает Date.now() в "basedet"
+compx-age_areas - создает path-ы для графика по возрастным группам, устанавливает каждому цвет, "age_areas"
+	!График рисуется не по квадратикам, а 10ю path-ами
+	! с учетом раскрашивания в розово-голубой и серый нужно сделать 20ю
+	! сделала по две штуки на каждую возрастную группу, left и right
+compx-base_graph_data - считает данные для графика - бегунов на каждом шаге
+compx-height_factor - проверяет, посчитан ли height_factor (this.height/ (max_runners_in_step * this.y_scale))
+
+compx-selector_matching - формирует подписи к графику (подпись и координаты) в "selector_matching"
+	!selector_matching нигде в коде не используется, используется прямо в html:
+	<div class="selector_box hidden" pv-class="selector_box {{!selector_matching && 'hidden'}}"
+						pv-props="
+							style.left: {{selector_matching && ((selector_matching.selector.pos_x * px_step) || '0')}}
+							style.bottom: {{selector_matching && ((selector_matching.selector.pos_y * height_factor) || '0')}}
+							style.width: {{px_step}}
+							style.height: {{height_factor}}
+						"
+					></div>
+- класс "hidden" устанавливается, если !selector_mathing, так же со свойствами 
+
+compx-draw - составляем path d, рисуем
+	!пришлось сделать по два описания на каждую возрастную группу в зависимости от положения слайдера
+Градиенты цветов для графика находятся в RunMapCompxCtr, gender_grads и grays
+
+Если график перерисовывается в зависимости от данных - то и подписывать нужно текущее количество бегунов и бегуний и возраст, а не общее?
+
+
+	RunMapCtr.js
+RunMapCtr - рисование на карте
+createBase()
+	knodes - ключевой объект
+
+	knodes.main_group = this.svg.append('g')
+	knodes.base = main_group.append("path");
+	knodes.areas_group = main_group.append('g');
+	knodes.debug_group = main_group.append('g');
+	knodes.single_runners = main_group.append('g');
+
+compx-draw - вызывает из maphelper getPoints и drawRunnersPoints, drawRunnerPoints рисует змея и единичных бегунов по данным, которые делает 
+getPoints, цвета берутся оттуда же, откуда цвета для графика - RunMapCompxCtr, gender_grads
+Рисование змея - в maphelper
+hlcl - положение змея относительно трека и его толщина (hlcl.height_scale - можно сделать с минусом)
+
+drawRunnerPoints
+	getStepsRunners
+		getRunners
+			getFullRunners
+
+getPoints
+	getBasePoints
+	! var step = 300 * px_in_m - шаг в метрах, через который берутся точки для рисования змея
+	! если увеличить (до 500, например)  - змей перестает ломаться на толстых крутых участках  и становится более плавным
+	! но - уменьшается число единичных бегунов 
+		getSteps
+		getPointsDistanceM -> getPointsDistance (расстояние между 2 точками по их координатам)
+		getAngleBySegmentsPointsM -> getAngleBySegmentsPoints (угол через atan2)
+		getPointOnLine (новые координаты, если есть старые, длина отрезка и угол)
+	getAreaByData
+		getHeightByRunners
+		getPointOnPerpendicularM
+	getAreaPathData
+		formatCurve
+В принципе, чтобы масштабировать змея  - менять ориентацию относительно трека, радиус крутизны - достаточно менять step в getBasePoints и hlcl.height_scale. Если будет задача, например, менять ориентацию в процессе прокрутки - придется уже что-то придумывать
+
+Единичные бегуны перемещаются странными кучками до 5 человек, это заметно на резких поворотах. Змей ползёт не точно по маршруту (кривые безье сглаживают резкие повороты и выступы), но если выделить бегунов - они будут двигаться точно по машруту - рисование выделенных бегунов не зависит от змея, рисуется в другом месте (RunMapCtr, SelRunner)
+
+_______
+provoda
+
+Eventor: function(){},
+StatesEmitter: function(){},
+Model: function(){},
+HModel: function() {},
+View: function(){},
+
+views_proxies
+mpx  - model proxies?
+
+setTplFilterGetFn(fn)
+	angbo.getFilterFn = fn ???
+
+updateNesting(collection_name, array, opts, spec_data) - nesting - для этих
+_this.updateNesting('filter_' + name, array);
+_updateProxy
+
+wch - устанавливает данные-"состояния", похоже, если они были вычислены в функциях из свойств с префиксом "compx-"
+
+compx-{что-то}: {
+	depends_on: ['^aaa','bbb'],
+	fn: function(){}
+}
+^ - states_of_parent
+@ - states_of_nesting
+# - states_of_root
+________
+        var e = new Error('');
+        var stack = e.stack.replace(/^[^\(]+?[\n$]/gm, '')
+            .replace(/^\s+at\s+/gm, '')
+            .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@')
+            .split('\n');
+        console.log(stack);
+
+Ссылки:
+http://ejohn.org/blog/simple-javascript-inheritance/   - про часть spv
+http://habrahabr.ru/post/60957/  -debounce и throttle в spv, от автора - "устранение дребезга"
+http://arestov.github.io/rendering-perfomance/  - некоторое описание от Арестова
+
+
+
+
+

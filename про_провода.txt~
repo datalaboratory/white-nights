@@ -1,0 +1,44 @@
+http://ejohn.org/blog/simple-javascript-inheritance/   - про часть spv
+http://habrahabr.ru/post/60957/  -debounce и throttle в spv, от автора - "устранение дребезга"
+http://arestov.github.io/rendering-perfomance/  - некоторое описание от Арестова
+
+Eventor: function(){},
+StatesEmitter: function(){},
+Model: function(){},
+HModel: function() {},
+View: function(){},
+
+В View - все объекты расширяются из provoda.View, умеют createDetails(), createBase(), bindBase()
+
+collch-viewName {} - 'collection changes' - из children_view с именем viewName будут отслеживаться изменения
+		children_views: {
+				selected_runners: SelRunner
+			},
+		'collch-selected_runners': {
+				place: function() {
+					return $(this.knodes.single_runners.node());
+				}
+			},
+compx-stateName: {
+	depends_on: ['^stateName1','stateName2'],
+	fn: function(name1, name2){}
+}
+Перед именем состояния могут стоять:
+^ - states_of_parent
+@ - states_of_nesting
+# - states_of_root
+
+Функция в fn будет вызываться каждый раз при изменении состояний из массива depends_on, то, что она вернет - станет значением состояния "stateName"
+
+views_proxies
+mpx  - model proxies?
+
+
+
+updateNesting(collection_name, array, opts, spec_data) - nesting - для этих
+_this.updateNesting('filter_' + name, array);
+_updateProxy
+
+wch - устанавливает данные-"состояния", похоже, если они были вычислены в функциях из свойств с префиксом "compx-"
+
+
